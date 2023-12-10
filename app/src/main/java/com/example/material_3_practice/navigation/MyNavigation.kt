@@ -1,6 +1,9 @@
 package com.example.material_3_practice.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -10,9 +13,8 @@ import com.example.material_3_practice.screen.text.TextScreen
 import com.example.material_3_practice.screen.topAppBar.TopBarScreen
 
 @Composable
-fun MyNavigation() {
-    val navController = rememberNavController()
-
+fun MyNavigation(modifier: Modifier, navController: NavHostController) {
+//    val navController = rememberNavController()
     NavHost(navController = navController, startDestination = Screens.Home.name) {
         composable(Screens.Home.name) {
             HomeScreen(navController = navController)
@@ -24,4 +26,7 @@ fun MyNavigation() {
             TopBarScreen(navController = navController)
         }
     }
+
+
+
 }
