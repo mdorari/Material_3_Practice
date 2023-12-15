@@ -22,23 +22,23 @@ data class BottomNavigationItem(
 fun getItems(): List<BottomNavigationItem> {
     return listOf(
         BottomNavigationItem(
-            title = "Home",
-            route = Screens.Home.name,
+            title = "One",
+            route = Screens.NavOne.name,
             selectedItem = Icons.Filled.Home,
             unselectedItem = Icons.Outlined.Home,
             hasNews = false,
         ),
         BottomNavigationItem(
-            title = "Chat",
-            route = Screens.TextScreen.name,
+            title = "Two",
+            route = Screens.NavTwo.name,
             selectedItem = Icons.Filled.Email,
             unselectedItem = Icons.Outlined.Email,
             hasNews = false,
             badgeCount = 45
         ),
         BottomNavigationItem(
-            title = "TopBarScreen",
-            route = Screens.TopBarScreen.name,
+            title = "Three",
+            route = Screens.NavThree.name,
             selectedItem = Icons.Filled.Settings,
             unselectedItem = Icons.Outlined.Settings,
             hasNews = true,
