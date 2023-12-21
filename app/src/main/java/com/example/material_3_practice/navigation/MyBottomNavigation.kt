@@ -14,8 +14,9 @@ import com.example.material_3_practice.screen.navScreens.NavTwo
 fun MyBottomNavigation(modifier: Modifier,navController: NavHostController) {
     NavHost(
         modifier = modifier,
+        route = Graph.BOTTOM,
         navController = navController,
-        startDestination = Screens.BottomNavigationScreen.name
+        startDestination = Screens.NavOne.name
     ){
         composable(Screens.NavOne.name){
             NavOne(navController = navController)

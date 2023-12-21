@@ -9,9 +9,8 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.material_3_practice.navigation.MyNavigation
-import com.example.material_3_practice.screen.BottomNavigationScreen
-import com.example.material_3_practice.screen.MainScreen
+import androidx.navigation.compose.rememberNavController
+import com.example.material_3_practice.navigation.RootNavigation
 import com.example.material_3_practice.ui.theme.Material_3_PracticeTheme
 
 class MainActivity : ComponentActivity() {
@@ -24,7 +23,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ){
-                    MyNavigation()
+                    RootNavigation(navController = rememberNavController())
                 }
             }
         }

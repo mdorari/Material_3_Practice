@@ -15,15 +15,15 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.material_3_practice.navigation.MyBottomNavigation
 import com.example.material_3_practice.navigation.getItems
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun BottomNavigationScreen(navController: NavController) {
-    val bottomNavController = rememberNavController()
+fun BottomNavigationScreen(navController: NavHostController = rememberNavController()) {
+//    val bottomNavController = rememberNavController()
     var selectedItemIndex by rememberSaveable {
                     mutableStateOf(0)
                 }
@@ -68,9 +68,11 @@ fun BottomNavigationScreen(navController: NavController) {
             }
         }
     ) {
+
+//        Text(text = "MyBottomNavigation", modifier = Modifier.padding(it))
         MyBottomNavigation(
             modifier = Modifier.padding(it),
-            navController = bottomNavController
+            navController = navController
         )
     }
 

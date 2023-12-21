@@ -12,7 +12,7 @@ import androidx.navigation.NavController
 import com.example.material_3_practice.screen.Screens
 
 @Composable
-fun HomeScreen(navController: NavController,bottomNavController: NavController) {
+fun HomeScreen(navController: NavController) {
     Column(
     modifier = Modifier.fillMaxSize(),
     verticalArrangement = Arrangement.Center,
@@ -34,7 +34,7 @@ fun HomeScreen(navController: NavController,bottomNavController: NavController) 
             Text(text = "Button Screen")
         }
         Button(
-            onClick = { bottomNavController.navigate(route = Screens.BottomNavigationScreen.name) }
+            onClick = { navController.navigate(route = "BottomNavigation") }
         ) {
             Text(text = "Bottom navigation Screen")
         }
