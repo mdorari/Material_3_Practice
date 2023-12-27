@@ -32,6 +32,7 @@ import com.example.material_3_practice.ui.theme.MediumGray
 import com.example.material_3_practice.ui.theme.Orange
 import com.example.material_3_practice.utils.updateInputs
 import com.example.material_3_practice.widget.CalculatorButton
+import java.math.BigDecimal
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -430,7 +431,18 @@ fun CalculatorScreen(
                             .aspectRatio(1f)
                             .weight(1f),
                         onClick = {
-                            /* TODO */
+                            if (firstInput == "" && calculationResult==""){
+                                firstInput = "0."
+                            }else if (operator == "" && firstInput.last().toString() != "."){
+                                firstInput += "."
+                            } else if (operator!="" && secondInput==""){
+                                secondInput = "0."
+                            }else if (secondInput !="" && secondInput.last().toString() != "."){
+                                secondInput += "."
+                            }else{
+                                calculationResult = ""
+                                firstInput = "0."
+                            }
 //                            calculationSteps = updateCalculationSteps(calculationSteps,".")
                         }
                     )
@@ -443,12 +455,12 @@ fun CalculatorScreen(
                         onClick = {
                             if (firstInput != "" && secondInput != "" && operator != "") {
                                 calculationResult = when (operator) {
-                                    "+" -> (firstInput.toInt() + secondInput.toInt()).toString()
-                                    "-" -> (firstInput.toInt() - secondInput.toInt()).toString()
-                                    "x" -> (firstInput.toInt() * secondInput.toInt()).toString()
+                                    "+" -> (BigDecimal(firstInput) + BigDecimal(secondInput)).toString()
+                                    "-" -> (BigDecimal(firstInput) - BigDecimal(secondInput)).toString()
+                                    "x" -> (BigDecimal(firstInput) * BigDecimal(secondInput)).toString()
                                     else -> {
                                         if (secondInput != "0") {
-                                            (firstInput.toInt() / secondInput.toInt()).toString()
+                                            (BigDecimal(firstInput) / BigDecimal(secondInput)).toString()
                                         } else {
                                             "Can't divide by 0"
                                         }
