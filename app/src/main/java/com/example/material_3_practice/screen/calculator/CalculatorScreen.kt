@@ -133,8 +133,13 @@ fun CalculatorScreen(
                             .aspectRatio(1f)
                             .weight(1f),
                         onClick = {
-                            if (calculationSteps != "") {
-                                calculationSteps = calculationSteps.dropLast(1)
+                            if (secondInput != "") {
+                                secondInput = secondInput.dropLast(1)
+//                                calculationSteps = calculationSteps.dropLast(1)
+                            } else if (operator != "") {
+                                operator = ""
+                            } else if (firstInput != "") {
+                                firstInput = firstInput.dropLast(1)
                             }
                         }
                     )
