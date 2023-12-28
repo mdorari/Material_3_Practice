@@ -94,7 +94,6 @@ fun CalculatorScreen(
                             firstInput = ""
                             secondInput = ""
                             operator = ""
-                            calculationHistory = ""
                             calculationResult = ""
                         })
                     CalculatorButton(symbol = "DEL",
