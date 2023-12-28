@@ -1,7 +1,6 @@
 package com.example.material_3_practice.screen.calculator
 
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -10,10 +9,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -26,21 +22,18 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.material_3_practice.model.UserInputs
 import com.example.material_3_practice.ui.theme.LightGray
 import com.example.material_3_practice.ui.theme.MediumGray
 import com.example.material_3_practice.ui.theme.Orange
-import com.example.material_3_practice.utils.updateInputs
 import com.example.material_3_practice.widget.CalculatorButton
 import java.math.BigDecimal
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CalculatorScreen(
     modifier: Modifier = Modifier,
     buttonSpacing: Dp = 8.dp,
 ) {
-    var calculationSteps by remember {
+    var calculationHistory by remember {
         mutableStateOf("")
     }
     var firstInput by remember {
@@ -57,8 +50,7 @@ fun CalculatorScreen(
     }
 
     Column(
-        modifier = Modifier.fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally
+        modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
         /// calculator screens
@@ -72,34 +64,14 @@ fun CalculatorScreen(
                 horizontalAlignment = Alignment.End,
                 verticalArrangement = Arrangement.Bottom
             ) {
-                Row {
-//                    Text(text = "Input 1:")
-                    Text(text = firstInput, fontSize = 40.sp, color = Color.White)
-                }
-                Row {
-//                    Text(text = "operator:")
-                    Text(text = operator, fontSize = 36.sp, color = LightGray)
-                }
-                Row {
-//                    Text(text = "Input 2:")
-                    Text(text = secondInput, fontSize = 40.sp, color = Color.White)
-                }
-//                Text(text = calculationSteps)
+                Text(text = calculationHistory, fontSize = 20.sp, color = Color.DarkGray)
+                Text(text = firstInput, fontSize = 40.sp, color = Color.White)
+                Text(text = operator, fontSize = 36.sp, color = LightGray)
+                Text(text = secondInput, fontSize = 40.sp, color = Color.White)
                 Text(text = calculationResult, fontSize = 40.sp, color = Orange)
             }
         }
 
-
-        // show history button
-//        Button(
-//            onClick = { /*TODO*/ },
-//            modifier = Modifier.fillMaxWidth()
-//        ) {
-//            Icon(
-//                imageVector = Icons.Filled.KeyboardArrowDown,
-//                contentDescription = "show history"
-//            )
-//        }
 
         ///Calculator buttons
         Box(modifier = modifier) {
@@ -113,8 +85,7 @@ fun CalculatorScreen(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.spacedBy(buttonSpacing)
                 ) {
-                    CalculatorButton(
-                        symbol = "AC",
+                    CalculatorButton(symbol = "AC",
                         modifier = Modifier
                             .background(LightGray)
                             .aspectRatio(2f)
@@ -123,12 +94,10 @@ fun CalculatorScreen(
                             firstInput = ""
                             secondInput = ""
                             operator = ""
-                            calculationSteps = ""
+                            calculationHistory = ""
                             calculationResult = ""
-                        }
-                    )
-                    CalculatorButton(
-                        symbol = "DEL",
+                        })
+                    CalculatorButton(symbol = "DEL",
                         modifier = Modifier
                             .background(LightGray)
                             .aspectRatio(1f)
@@ -142,25 +111,21 @@ fun CalculatorScreen(
                             } else if (firstInput != "") {
                                 firstInput = firstInput.dropLast(1)
                             }
-                        }
-                    )
-                    CalculatorButton(
-                        symbol = "/",
+                        })
+                    CalculatorButton(symbol = "/",
                         modifier = Modifier
                             .background(Orange)
                             .aspectRatio(1f)
                             .weight(1f),
                         onClick = {
-                            if (calculationResult != "" && calculationResult != "Can't divide by 0") {
+                            if (firstInput == "" && calculationResult != "" && calculationResult != "Can't divide by 0") {
                                 firstInput = calculationResult
                                 operator = "/"
                                 calculationResult = ""
                             } else if (firstInput != "") {
                                 operator = "/"
                             }
-                            calculationSteps = updateCalculationSteps(calculationSteps, "/")
-                        }
-                    )
+                        })
                 }
 
                 Row(
@@ -168,13 +133,15 @@ fun CalculatorScreen(
                     horizontalArrangement = Arrangement.spacedBy(buttonSpacing)
                 ) {
 
-                    CalculatorButton(
-                        symbol = "7",
+                    CalculatorButton(symbol = "7",
                         modifier = Modifier
                             .background(MediumGray)
                             .aspectRatio(1f)
                             .weight(1f),
                         onClick = {
+                            if(calculationResult !=""){
+                                calculationResult = ""
+                            }
                             if (firstInput == "") {
                                 firstInput = "7"
                             } else if (operator == "") {
@@ -184,16 +151,16 @@ fun CalculatorScreen(
                             } else {
                                 secondInput += "7"
                             }
-                            calculationSteps = updateCalculationSteps(calculationSteps, "7")
-                        }
-                    )
-                    CalculatorButton(
-                        symbol = "8",
+                        })
+                    CalculatorButton(symbol = "8",
                         modifier = Modifier
                             .background(MediumGray)
                             .aspectRatio(1f)
                             .weight(1f),
                         onClick = {
+                            if(calculationResult !=""){
+                                calculationResult = ""
+                            }
                             if (firstInput == "") {
                                 firstInput = "8"
                             } else if (operator == "") {
@@ -203,16 +170,16 @@ fun CalculatorScreen(
                             } else {
                                 secondInput += "8"
                             }
-                            calculationSteps = updateCalculationSteps(calculationSteps, "8")
-                        }
-                    )
-                    CalculatorButton(
-                        symbol = "9",
+                        })
+                    CalculatorButton(symbol = "9",
                         modifier = Modifier
                             .background(MediumGray)
                             .aspectRatio(1f)
                             .weight(1f),
                         onClick = {
+                            if(calculationResult !=""){
+                                calculationResult = ""
+                            }
                             if (firstInput == "") {
                                 firstInput = "9"
                             } else if (operator == "") {
@@ -222,38 +189,35 @@ fun CalculatorScreen(
                             } else {
                                 secondInput += "9"
                             }
-                            calculationSteps = updateCalculationSteps(calculationSteps, "9")
-                        }
-                    )
-                    CalculatorButton(
-                        symbol = "x",
+                        })
+                    CalculatorButton(symbol = "x",
                         modifier = Modifier
                             .background(Orange)
                             .aspectRatio(1f)
                             .weight(1f),
                         onClick = {
-                            if (calculationResult != "" && calculationResult != "Can't divide by 0") {
+                            if (firstInput == "" && calculationResult != "" && calculationResult != "Can't divide by 0") {
                                 firstInput = calculationResult
                                 operator = "x"
                                 calculationResult = ""
                             } else if (firstInput != "") {
                                 operator = "x"
                             }
-                            calculationSteps = updateCalculationSteps(calculationSteps, "x")
-                        }
-                    )
+                        })
                 }
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.spacedBy(buttonSpacing)
                 ) {
-                    CalculatorButton(
-                        symbol = "4",
+                    CalculatorButton(symbol = "4",
                         modifier = Modifier
                             .background(MediumGray)
                             .aspectRatio(1f)
                             .weight(1f),
                         onClick = {
+                            if(calculationResult !=""){
+                                calculationResult = ""
+                            }
                             if (firstInput == "") {
                                 firstInput = "4"
                             } else if (operator == "") {
@@ -263,16 +227,16 @@ fun CalculatorScreen(
                             } else {
                                 secondInput += "4"
                             }
-                            calculationSteps = updateCalculationSteps(calculationSteps, "4")
-                        }
-                    )
-                    CalculatorButton(
-                        symbol = "5",
+                        })
+                    CalculatorButton(symbol = "5",
                         modifier = Modifier
                             .background(MediumGray)
                             .aspectRatio(1f)
                             .weight(1f),
                         onClick = {
+                            if(calculationResult !=""){
+                                calculationResult = ""
+                            }
                             if (firstInput == "") {
                                 firstInput = "5"
                             } else if (operator == "") {
@@ -282,16 +246,16 @@ fun CalculatorScreen(
                             } else {
                                 secondInput += "5"
                             }
-                            calculationSteps = updateCalculationSteps(calculationSteps, "5")
-                        }
-                    )
-                    CalculatorButton(
-                        symbol = "6",
+                        })
+                    CalculatorButton(symbol = "6",
                         modifier = Modifier
                             .background(MediumGray)
                             .aspectRatio(1f)
                             .weight(1f),
                         onClick = {
+                            if(calculationResult !=""){
+                                calculationResult = ""
+                            }
                             if (firstInput == "") {
                                 firstInput = "6"
                             } else if (operator == "") {
@@ -301,38 +265,35 @@ fun CalculatorScreen(
                             } else {
                                 secondInput += "6"
                             }
-                            calculationSteps = updateCalculationSteps(calculationSteps, "6")
-                        }
-                    )
-                    CalculatorButton(
-                        symbol = "-",
+                        })
+                    CalculatorButton(symbol = "-",
                         modifier = Modifier
                             .background(Orange)
                             .aspectRatio(1f)
                             .weight(1f),
                         onClick = {
-                            if (calculationResult != "" && calculationResult != "Can't divide by 0") {
+                            if (firstInput == "" && calculationResult != "" && calculationResult != "Can't divide by 0") {
                                 firstInput = calculationResult
                                 operator = "-"
                                 calculationResult = ""
                             } else if (firstInput != "") {
                                 operator = "-"
                             }
-                            calculationSteps = updateCalculationSteps(calculationSteps, "-")
-                        }
-                    )
+                        })
                 }
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.spacedBy(buttonSpacing)
                 ) {
-                    CalculatorButton(
-                        symbol = "1",
+                    CalculatorButton(symbol = "1",
                         modifier = Modifier
                             .background(MediumGray)
                             .aspectRatio(1f)
                             .weight(1f),
                         onClick = {
+                            if(calculationResult !=""){
+                                calculationResult = ""
+                            }
                             if (firstInput == "") {
                                 firstInput = "1"
                             } else if (operator == "") {
@@ -342,16 +303,16 @@ fun CalculatorScreen(
                             } else {
                                 secondInput += "1"
                             }
-                            calculationSteps = updateCalculationSteps(calculationSteps, "1")
-                        }
-                    )
-                    CalculatorButton(
-                        symbol = "2",
+                        })
+                    CalculatorButton(symbol = "2",
                         modifier = Modifier
                             .background(MediumGray)
                             .aspectRatio(1f)
                             .weight(1f),
                         onClick = {
+                            if(calculationResult !=""){
+                                calculationResult = ""
+                            }
                             if (firstInput == "") {
                                 firstInput = "2"
                             } else if (operator == "") {
@@ -361,16 +322,16 @@ fun CalculatorScreen(
                             } else {
                                 secondInput += "2"
                             }
-                            calculationSteps = updateCalculationSteps(calculationSteps, "2")
-                        }
-                    )
-                    CalculatorButton(
-                        symbol = "3",
+                        })
+                    CalculatorButton(symbol = "3",
                         modifier = Modifier
                             .background(MediumGray)
                             .aspectRatio(1f)
                             .weight(1f),
                         onClick = {
+                            if(calculationResult !=""){
+                                calculationResult = ""
+                            }
                             if (firstInput == "") {
                                 firstInput = "3"
                             } else if (operator == "") {
@@ -380,38 +341,35 @@ fun CalculatorScreen(
                             } else {
                                 secondInput += "3"
                             }
-                            calculationSteps = updateCalculationSteps(calculationSteps, "3")
-                        }
-                    )
-                    CalculatorButton(
-                        symbol = "+",
+                        })
+                    CalculatorButton(symbol = "+",
                         modifier = Modifier
                             .background(Orange)
                             .aspectRatio(1f)
                             .weight(1f),
                         onClick = {
-                            if (calculationResult != "" && calculationResult != "Can't divide by 0") {
+                            if (firstInput == "" && calculationResult != "" && calculationResult != "Can't divide by 0") {
                                 firstInput = calculationResult
                                 operator = "+"
                                 calculationResult = ""
                             } else if (firstInput != "") {
                                 operator = "+"
                             }
-                            calculationSteps = updateCalculationSteps(calculationSteps, "+")
-                        }
-                    )
+                        })
                 }
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.spacedBy(buttonSpacing)
                 ) {
-                    CalculatorButton(
-                        symbol = "0",
+                    CalculatorButton(symbol = "0",
                         modifier = Modifier
                             .background(MediumGray)
                             .aspectRatio(2f)
                             .weight(2f),
                         onClick = {
+                            if(calculationResult !=""){
+                                calculationResult = ""
+                            }
                             if (firstInput == "") {
                                 firstInput = ""
                             } else if (operator == "" && firstInput != "0") {
@@ -421,33 +379,30 @@ fun CalculatorScreen(
                             } else {
                                 secondInput += "0"
                             }
-                            calculationSteps = updateCalculationSteps(calculationSteps, "0")
-                        }
-                    )
-                    CalculatorButton(
-                        symbol = ".",
+                        })
+                    CalculatorButton(symbol = ".",
                         modifier = Modifier
                             .background(MediumGray)
                             .aspectRatio(1f)
                             .weight(1f),
                         onClick = {
-                            if (firstInput == "" && calculationResult==""){
+                            if(calculationResult !=""){
+                                calculationResult = ""
+                            }
+                            if (firstInput == "") {
                                 firstInput = "0."
-                            }else if (operator == "" && firstInput.last().toString() != "."){
+                            } else if (operator == "" && firstInput.last().toString() != ".") {
                                 firstInput += "."
-                            } else if (operator!="" && secondInput==""){
+                            } else if (operator != "" && secondInput == "") {
                                 secondInput = "0."
-                            }else if (secondInput !="" && secondInput.last().toString() != "."){
+                            } else if (secondInput != "" && secondInput.last().toString() != ".") {
                                 secondInput += "."
-                            }else{
+                            } else {
                                 calculationResult = ""
                                 firstInput = "0."
                             }
-//                            calculationSteps = updateCalculationSteps(calculationSteps,".")
-                        }
-                    )
-                    CalculatorButton(
-                        symbol = "=",
+                        })
+                    CalculatorButton(symbol = "=",
                         modifier = Modifier
                             .background(Orange)
                             .aspectRatio(1f)
@@ -466,29 +421,19 @@ fun CalculatorScreen(
                                         }
                                     }
                                 }
+                                calculationHistory =
+                                    "$firstInput $operator $secondInput = $calculationResult"
                                 firstInput = ""
                                 secondInput = ""
                                 operator = ""
                             }
-                        }
-                    )
+                        })
                 }
             }
         }
     }
 }
 
-
-fun updateCalculationSteps(text1: String, text2: String): String {
-    var newText = text1
-
-    if (newText != "0") {
-        newText += text2
-    } else {
-        newText = text2
-    }
-    return newText
-}
 
 @Preview
 @Composable

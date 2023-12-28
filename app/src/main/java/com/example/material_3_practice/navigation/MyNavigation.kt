@@ -17,13 +17,6 @@ import com.example.material_3_practice.screen.topAppBar.TopBarScreen
 
 //@Composable
 fun NavGraphBuilder.myNavigation(navController: NavHostController) {
-//    val navController = rememberNavController()
-//    val bottomNavController = rememberNavController()
-//    NavHost(
-//        navController = navController,
-//        route = "root_graph",
-//        startDestination = Screens.Home.name
-//    ) {
         navigation(
             route =  Graph.MAIN,
             startDestination = Screens.Home.name
